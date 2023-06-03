@@ -27,9 +27,16 @@ public class Hero : MonoBehaviour
     {
         _rigidbody.velocity = new Vector2(_direction.x * _speed, _rigidbody.velocity.y);
         var isJumping = _direction.y > 0;
-        if (isJumping && IsGrounded())
+        if (isJumping)
         {
-            _rigidbody.AddForce(Vector2.up * _jumpSpeed, ForceMode2D.Impulse);
+            if (IsGrounded() && _rigidbody.velocity.y <= 0)
+            {
+                _rigidbody.AddForce(Vector2.up * _jumpSpeed, ForceMode2D.Impulse);
+            }
+        }
+        else if (_rigidbody.velocity.y > 0)
+        {
+            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _rigidbody.velocity.y * 0.5f);
         }
     }
     private bool IsGrounded()
