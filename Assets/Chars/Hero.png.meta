@@ -148,8 +148,8 @@ TextureImporter:
         y: 672
         width: 96
         height: 96
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -760,9 +760,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Hero_9: -1818925183
       Hero_23: -1816767138
       Hero_8: 2092071342
+      Hero_26: -518403449
       Hero_2: -1079866883
       Hero_14: -1639443822
       Hero_0: 1490649065
@@ -787,7 +787,7 @@ TextureImporter:
       Hero_15: -1465803047
       Hero_28: 1996554348
       Hero_13: -374935746
-      Hero_26: -518403449
+      Hero_9: -1818925183
       Hero_3: -510508715
   spritePackingTag: 
   pSDRemoveMatte: 0

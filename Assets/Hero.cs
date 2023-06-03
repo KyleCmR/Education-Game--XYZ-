@@ -1,23 +1,42 @@
+using Newtonsoft.Json.Schema;
 using UnityEngine;
 
 public class Hero : MonoBehaviour
 {
     [SerializeField] private float _speed;
+    [SerializeField] private float _jumpSpeed;
+    [SerializeField] private LayerMask _groundLayer;
 
-    private float _direction;
+    [SerializeField] private float _groundCheckRadius;
+    [SerializeField] private Vector3 _groundCheckPositionDelta;
 
-    public void SetDirection(float direction)
-    { 
+    private Rigidbody2D _rigidbody;
+    private Vector2 _direction;
+
+    private void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody2D>();
+    }
+
+    public void SetDirection(Vector2 direction)
+    {
         _direction = direction;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (_direction !=0)
+        _rigidbody.velocity = new Vector2(_direction.x * _speed, _rigidbody.velocity.y);
+        var isJumping = _direction.y > 0;
+        if (isJumping && IsGrounded())
         {
-            var delta = _direction * _speed * Time.deltaTime;
-            var newXPosition = transform.position.x + delta;
-            transform.position = new Vector3(newXPosition, transform.position.y, transform.position.z);
+            _rigidbody.AddForce(Vector2.up * _jumpSpeed, ForceMode2D.Impulse);
         }
     }
+    private bool IsGrounded()
+    {
+        var hit = Physics2D.CircleCast(transform.position, _groundCheckRadius, Vector2.down, 0, _groundLayer);
+        return hit.collider != null;
+    }
+
+  
 }
