@@ -11,6 +11,4 @@ public class HeroInputReader : MonoBehaviour
         var direction = context.ReadValue<Vector2>();
         _hero.SetDirection(direction);
     }
-
-
 }
