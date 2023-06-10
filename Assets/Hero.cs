@@ -5,10 +5,7 @@ public class Hero : MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] private float _jumpSpeed;
-    [SerializeField] private LayerMask _groundLayer;
-
-    [SerializeField] private float _groundCheckRadius;
-    [SerializeField] private Vector3 _groundCheckPositionDelta;
+    [SerializeField] private LayerCheck _groundCheck;
 
     private Rigidbody2D _rigidbody;
     private Vector2 _direction;
@@ -27,22 +24,28 @@ public class Hero : MonoBehaviour
     {
         _rigidbody.velocity = new Vector2(_direction.x * _speed, _rigidbody.velocity.y);
         var isJumping = _direction.y > 0;
+
         if (isJumping)
         {
-            if (IsGrounded() && _rigidbody.velocity.y < 0)
+            if (IsGrounded() && _rigidbody.velocity.y <= 0)
             {
                 _rigidbody.AddForce(Vector2.up * _jumpSpeed, ForceMode2D.Impulse);
             }
         }
-        else if (_rigidbody.velocity.y > 0)
+        else if (_rigidbody.velocity.y >0)
         {
             _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _rigidbody.velocity.y * 0.5f);
         }
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = IsGrounded() ? Color.green : Color.red;
+        Gizmos.DrawSphere(transform.position, 0.3f);
+    }
     private bool IsGrounded()
     {
-        var hit = Physics2D.CircleCast(transform.position, _groundCheckRadius, Vector2.down, 0, _groundLayer);
-        return hit.collider != null;
+        return _groundCheck.IsTochingLayer;
     }
 
   
