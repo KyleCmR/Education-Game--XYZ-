@@ -14,17 +14,20 @@ public class SpriteAnimation : MonoBehaviour
     private int _currentSpritendex;
     private float _nextFrameTime;
 
-    private bool _isPlaying = true;
-
     private void Start()
     {
         _renderer = GetComponent<SpriteRenderer>();
+    }
+
+    private void OnEnable()
+    {
         _secondsPerFrame = 1f / _frameRate;
         _nextFrameTime = Time.time + _secondsPerFrame;
+        _currentSpritendex = 0;
     }
     private void Update()
     {
-        if (!_isPlaying || _nextFrameTime > Time.time) return;
+        if (_nextFrameTime > Time.time) return;
 
         if (_currentSpritendex >= _sprites.Length)
         {
@@ -34,8 +37,9 @@ public class SpriteAnimation : MonoBehaviour
             }
             else
             {
-                _isPlaying = false;
+                enabled = false;
                 _onComplete.Invoke();
+                return;
             }
         }
 
