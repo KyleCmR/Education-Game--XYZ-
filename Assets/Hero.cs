@@ -42,7 +42,7 @@ public class Hero : MonoBehaviour
     }
     private void Update()
     {
-        _isGrounded = IsGrounded(); 
+        _isGrounded = IsGrounded();
     }
 
     private void FixedUpdate()
@@ -54,7 +54,7 @@ public class Hero : MonoBehaviour
         _animator.SetBool("is-ground", _isGrounded);
         _animator.SetFloat("vertical-velocity", _rigidbody.velocity.y);
         _animator.SetBool("is-running", _direction.x != 0);
-            
+
         UpdateSpriteDirection();
     }
     private float CalculateYVelocity()
@@ -94,7 +94,7 @@ public class Hero : MonoBehaviour
         if (_direction.x > 0)
         {
             _sprite.flipX = false;
-        }                   
+        }
         else if (_direction.x < 0)
         {
             _sprite.flipX = true;
