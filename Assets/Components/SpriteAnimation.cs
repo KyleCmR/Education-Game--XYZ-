@@ -40,7 +40,7 @@ public class SpriteAnimation : MonoBehaviour
                 enabled = false;
                 _onComplete.Invoke();
                 return;
-            }
+            } 
         }
 
         _renderer.sprite = _sprites[_currentSpritendex];
