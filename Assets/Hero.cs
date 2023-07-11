@@ -13,6 +13,7 @@ public class Hero : MonoBehaviour
     [SerializeField] private float _interactionRadius;
     [SerializeField] private LayerMask _interactionLayer;
     [SerializeField] private SpawnComponent _footStepParticles;
+    [SerializeField] private ParticleSystem _hitParticles;
 
     private Rigidbody2D _rigidbody;
     private Vector2 _direction;
@@ -109,7 +110,10 @@ public class Hero : MonoBehaviour
     {
         return _groundCheck.IsTochingLayer;
     }
-
+    public void SaySomething()
+    {
+        Debug.Log("Something");
+    }
     public void AddCoins(int coins)
     {
         _coins += coins;
@@ -120,6 +124,23 @@ public class Hero : MonoBehaviour
     {
         _animator.SetTrigger("hit");
         _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _damageJumpSpeed);
+
+        if (_coins > 0 )
+        {
+            SpawnCoins();
+        }
+    }
+
+    private void SpawnCoins()
+    {
+        var numCoinsToDispose = Mathf.Min(_coins, 5);
+        _coins -= numCoinsToDispose;
+        var burst = _hitParticles.emission.GetBurst(0);
+        burst.count = numCoinsToDispose;
+        _hitParticles.emission.SetBurst(0, burst);
+
+        _hitParticles.gameObject.SetActive(true);
+        _hitParticles.Play();
     }
 
     public void Interact()
