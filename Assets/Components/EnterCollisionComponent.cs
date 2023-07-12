@@ -16,10 +16,9 @@ public class EnterCollisionComponent : MonoBehaviour
             _action?.Invoke(other.gameObject);
         }
     }
+}
+[Serializable]
+public class EnterEvent : UnityEvent<GameObject>
+{
 
-    [Serializable]
-    public class EnterEvent : UnityEvent<GameObject>
-    {
-
-    }
 }

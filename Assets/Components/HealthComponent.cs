@@ -10,17 +10,21 @@ public class HealthComponent : MonoBehaviour
     [SerializeField] private UnityEvent _onDie;
     [SerializeField] private UnityEvent _onHeal;
 
-    public void ApplyDamage(int damageValue)
+    public void ModifyHealth(int healthDelta)
     {
-        _health -= damageValue;
-        _onDamage?.Invoke();
+        _health += healthDelta;
+
+        if (healthDelta < 0 )
+        {
+            _onDamage?.Invoke();
+        }
+        if (healthDelta > 0)
+        {
+            _onHeal?.Invoke();
+        }
         if (_health <= 0)
         {
             _onDie?.Invoke();
         }
     }
-    public void TakePotion(int healValue)
-    {
-        _health += healValue;
-    }    
 }
